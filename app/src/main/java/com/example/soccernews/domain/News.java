@@ -1,10 +1,34 @@
 package com.example.soccernews.domain;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class News {
+    @PrimaryKey
+    private int id;
+
     private String title;
     private String description;
     private String image;
     private String link;
+    private boolean favorite;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 
     public String getTitle() {
         return title;
