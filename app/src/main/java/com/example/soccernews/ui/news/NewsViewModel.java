@@ -40,12 +40,14 @@ public class NewsViewModel extends ViewModel {
 
                 } else {
                     //TODO Pensar em uma estratégia de tratamento de erros
+                    System.console().printf("Erro");
                 }
             }
 
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
                 //TODO Pensar em uma estratégia de tratamento de erros
+                System.console().printf("Erro");
             }
         });
     }
