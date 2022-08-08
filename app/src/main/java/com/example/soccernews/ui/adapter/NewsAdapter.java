@@ -1,5 +1,6 @@
 package com.example.soccernews.ui.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.soccernews.R;
 import com.example.soccernews.databinding.NewsItemBinding;
 import com.example.soccernews.domain.News;
 import com.squareup.picasso.Picasso;
@@ -34,6 +36,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
+
         News news = this.news.get(position);
         holder.binding.tvTitle.setText(news.title);
         holder.binding.tvDescription.setText(news.description);
@@ -43,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.binding.btOpenLink.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(news.link));
-            holder.itemView.getContext().startActivity(intent);
+            context.startActivity(intent);
         });
         //Implementação de funcionalidade de "Compartilhar Link"
         holder.binding.ivShare.setOnClickListener(view -> {
@@ -51,14 +55,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_SUBJECT, news.title);
             intent.putExtra(Intent.EXTRA_TEXT, news.link);
-            holder.itemView.getContext().startActivity(Intent.createChooser(intent, "Share via"));
+            context.startActivity(Intent.createChooser(intent, "Share via"));
         });
         //Implementação de favoritar (o evento será instanciado pelo Fragment)
         holder.binding.ivFavorite.setOnClickListener(view -> {
             news.favorite = !news.favorite;
             this.favoriteListener.ClickFavorite(news);
         });
+        int favoriteColor = news.favorite ? R.color.favorite_active : R.color.favorite_defaltul;
 
+        holder.binding.ivFavorite.setColorFilter(context.getResources().getColor(favoriteColor));
     }
 
     @Override
