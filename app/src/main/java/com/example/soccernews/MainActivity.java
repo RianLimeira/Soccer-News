@@ -1,4 +1,4 @@
-package com.example.soccernews.ui;
+package com.example.soccernews;
 
 import android.os.Bundle;
 
