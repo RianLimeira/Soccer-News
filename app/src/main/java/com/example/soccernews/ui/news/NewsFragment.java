@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Room;
 
+import com.example.soccernews.MainActivity;
 import com.example.soccernews.data.local.AppDataBase;
 import com.example.soccernews.databinding.FragmentNewsBinding;
 import com.example.soccernews.ui.adapter.NewsAdapter;
@@ -21,7 +22,7 @@ import com.example.soccernews.ui.adapter.NewsAdapter;
 public class NewsFragment extends Fragment {
 
     private FragmentNewsBinding binding;
-    private AppDataBase db;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         NewsViewModel newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
@@ -29,14 +30,14 @@ public class NewsFragment extends Fragment {
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        db = Room.databaseBuilder(getContext(), AppDataBase.class, "soccer-news")
-                .allowMainThreadQueries()
-                .build();
 
         binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
         newsViewModel.getNews().observe(getViewLifecycleOwner(), news -> {
             binding.rvNews.setAdapter(new NewsAdapter(news, updateNews -> {
-                db.newsDao().insert(updateNews);
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity != null) {
+                    activity.getDb().newsDao().save(updateNews);
+                }
 
             }));
         });
