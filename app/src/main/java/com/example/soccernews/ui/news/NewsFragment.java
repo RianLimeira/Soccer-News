@@ -41,6 +41,21 @@ public class NewsFragment extends Fragment {
 
             }));
         });
+
+        newsViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+           switch (state){
+               case DOING:
+                   //TODO: Incluir SwipeRefreshLayout (loading)
+                   break;
+               case DONE:
+                   //TODO: Finalizar SwipeRefreshLayout (loading)
+                   break;
+               case ERROR:
+                   //TODO: Incluir SwipeRefreshLayout (loading)
+                   //TODO: Mostar um erro genrico
+           }
+        });
+
         return root;
     }
 
