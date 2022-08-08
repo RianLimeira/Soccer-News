@@ -1,7 +1,8 @@
-package com.example.soccernews;
+package com.example.soccernews.ui;
 
 import android.os.Bundle;
 
+import com.example.soccernews.R;
 import com.example.soccernews.data.local.AppDataBase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
